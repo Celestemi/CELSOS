@@ -1,21 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>CELSOS - Mapa de Alerta</title>
+  <meta charset="UTF-8">
+  <title>CELSOS - Sistema de Emergencia Personal</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h2>Ubicación de la alerta</h2>
-  <div id="map" style="height: 500px;"></div>
+<body class="dark">
+
+  <div class="login-container" id="login">
+    <h1>🔐 Iniciar sesión</h1>
+    <input type="text" id="user" placeholder="Usuario" />
+    <input type="password" id="pass" placeholder="Contraseña" />
+    <button onclick="login()">Ingresar</button>
+  </div>
+
+  <div class="app-container hidden" id="mainApp">
+    <header>
+      <h1>🛡 CELSOS - Sistema de Emergencia</h1>
+      <p class="slogan">Tu seguridad, en un solo clic</p>
+    </header>
+
+    <div class="controls">
+      <button onclick="getMyLocation()">📍 Mi ubicación</button>
+      <button onclick="sendPanicAlert()">🆘 ¡Estoy en peligro!</button>
+      <button onclick="shareLocation()">🔗 Compartir ubicación</button>
+      <select id="theme" onchange="changeTheme()">
+        <option value="dark">🌑 Oscuro</option>
+        <option value="pink">🌸 Rosa</option>
+        <option value="blue">💠 Celeste</option>
+      </select>
+    </div>
+
+    <div id="map"></div>
+
+    <section class="history">
+      <h2>📜 Historial de Alertas</h2>
+      <table id="historyTable">
+        <thead><tr><th>Fecha</th><th>Hora</th><th>Ubicación</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
-    const map = L.map('map').setView([-12.0464, -77.0428], 13); // Lima por defecto
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-    
-    // Ejemplo: coordenada simulada
-    const marker = L.marker([-12.0464, -77.0428]).addTo(map)
-      .bindPopup('Última alerta').openPopup();
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>

@@ -1,14 +1,8 @@
-# CELSOS
+# CELSOS – Sistema de Emergencia con Geolocalización
 
-Sistema de Alerta y Localización Satelital para Personas en Riesgo.
+Este proyecto simula una alerta de emergencia por botón físico con Raspberry Pi y módulo GPS. La ubicación se muestra en un mapa web.
 
-## ¿Qué hace?
-
-CELSOS detecta emergencias mediante un botón físico, y envía la ubicación GPS en tiempo real a una plataforma web.
-
-## Avance actual (50%):
-
-✅ Informe hasta Capítulo IV  
-✅ Simulación de envío de coordenadas  
-✅ Estructura del backend definida  
-✅ Frontend en proceso
+## Cómo usar:
+1. Ejecuta `app.py` desde `src/backend/`
+2. En otro terminal ejecuta `simulador_alerta.py`
+3. Abre tu navegador y entra a http://localhost:5000
