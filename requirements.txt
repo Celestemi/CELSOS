@@ -5,5 +5,5 @@ pymongo
 gunicorn
 psycopg2-binary
 python-dotenv
-flask-cors
+flask-cors 
 twilio
