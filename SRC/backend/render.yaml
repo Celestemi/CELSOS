@@ -2,3 +2,16 @@ databases:
   - name: celsos_db
     plan: free
     region: oregon 
+
+services:
+  - type: web
+    name: celsos-backend
+    env: python
+    rootDir: SRC/backend
+    buildCommand: pip install -r ../../requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: celsos_db
+          property: connectionString
