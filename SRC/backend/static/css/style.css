@@ -1,0 +1,197 @@
+/* Estilos base */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+/* Temas */
+.theme-dark {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+.theme-pink {
+    background-color: #fff0f5;
+    color: #8b005d;
+}
+
+.theme-blue {
+    background-color: #f0f8ff;
+    color: #00688b;
+}
+
+.theme-green {
+    background-color: #f0fff0;
+    color: #006400;
+}
+
+/* Mapa y controles */
+.map-section {
+    margin-bottom: 30px;
+}
+
+#map {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    margin-top: 10px;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Aside */
+aside {
+    background-color: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.theme-dark aside {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.theme-switch, .location-search {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+/* Historial */
+.history {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.theme-dark th {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Botón de logout */
+.logout-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    #map {
+        height: 300px;
+    }
+}
+
+.theme-select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+}
+
+/* Estilos para los temas */
+.theme-light {
+  --sidebar-bg: #f5f5f5;
+  --sidebar-text: #333;
+  --main-bg: white;
+}
+
+.theme-dark {
+  --sidebar-bg: #2c3e50;
+  --sidebar-text: white;
+  --main-bg: #34495e;
+}
+
+.theme-blue {
+  --sidebar-bg: #3498db;
+  --sidebar-text: white;
+  --main-bg: #2980b9;
+}
+
+.sidebar {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+}
+
+body {
+  background-color: var(--main-bg);
+}

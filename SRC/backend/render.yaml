@@ -1,0 +1,4 @@
+databases:
+  - name: celsos_db
+    plan: free
+    region: oregon 

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CELSOS - Panel de Emergencia</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    :root {
+      --sidebar-bg: #2c3e50;
+      --sidebar-text: white;
+      --main-bg: #f5f5f5;
+    }
+    
+    .theme-light {
+      --sidebar-bg: #f5f5f5;
+      --sidebar-text: #333;
+      --main-bg: white;
+    }
+
+    .theme-dark {
+      --sidebar-bg: #2c3e50;
+      --sidebar-text: white;
+      --main-bg: #34495e;
+    }
+
+    .theme-blue {
+      --sidebar-bg: #3498db;
+      --sidebar-text: white;
+      --main-bg: #2980b9;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--main-bg);
+    }
+    
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .sidebar {
+      width: 300px;
+      padding: 20px;
+      background-color: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      transition: all 0.3s ease;
+    }
+    
+    .map-container {
+      flex: 1;
+      position: relative;
+    }
+    
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    
+    .search-box {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+    
+    .search-box input {
+      width: 70%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .search-box button {
+      padding: 8px 15px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .color-box {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #3498db, #e74c3c, #2ecc71, #f39c12);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    button:hover {
+      background: #2980b9;
+    }
+    
+    .emergency-btn {
+      background: #e74c3c;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .emergency-btn:hover {
+      background: #c0392b;
+    }
+    
+    .error-message {
+      color: #e74c3c;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .theme-select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+
+    #historyTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    #historyTable th, #historyTable td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #historyTable th {
+      background-color: var(--sidebar-bg);
+      color: white;
+    }
+  </style>
+</head>
+<body class="theme-dark">
+  <div class="container">
+    <div class="sidebar">
+      <h1>Bienvenido, Usuario</h1>
+      
+      <button class="emergency-btn" id="panicButton">¡Estoy en peligro!</button>
+      
+      <h3>Mi ubicación</h3>
+      <button id="getLocation">Actualizar ubicación</button>
+      <button id="shareLocation">Compartir ubicación</button>
+      
+      <h3>Configuración</h3>
+      <select id="themeSelect" class="theme-select">
+        <option value="theme-light">Tema Claro</option>
+        <option value="theme-dark">Tema Oscuro</option>
+        <option value="theme-blue">Tema Celeste</option>
+      </select>
+      
+      <button id="logout">Cerrar sesión</button>
+      
+      <div id="locationInfo">
+        <p>Coordenadas: <span id="coordinates">No disponible</span></p>
+        <p>Dirección: <span id="address">No disponible</span></p>
+      </div>
+
+      <h3>Historial de Alertas</h3>
+      <table id="historyTable">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Ubicación</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="map-container">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Ej. Lima, Perú">
+        <button id="searchButton">Buscar</button>
+      </div>
+      
+      <div id="map"></div>
+      <div class="color-box"></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="/static/JS/main.js"></script>
+</body>
+</html>
